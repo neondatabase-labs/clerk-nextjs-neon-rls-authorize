@@ -1,6 +1,7 @@
 "use client";
 
 import { useOrganization, useSession, useUser } from "@clerk/nextjs";
+import { useEffect } from "react";
 
 function Row({
   desc,
@@ -60,6 +61,17 @@ export function UserDetails() {
   const { user } = useUser();
   const { session } = useSession();
   const { organization } = useOrganization();
+
+  useEffect(() => {
+    fetch("http://localhost:3001/get-token")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, []);
 
   if (!user || !session) return null;
 
