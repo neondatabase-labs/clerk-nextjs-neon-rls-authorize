@@ -7,11 +7,14 @@ import {
   useUser,
   UserButton,
   SignInButton,
-  SignUpButton
+  SignUp,
+  SignOutButton,
+  SignUpButton,
 } from '@clerk/nextjs'
 import { neon } from '@neondatabase/serverless';
+import { Sign } from 'crypto';
 
-const DATABASE_URL='FIXME';
+const DATABASE_URL='postgresql://authenticated@ep-aged-sound-w0m8llma.cloud.nitrogen.aws.neon.build/neondb?sslmode=require';
 
 export default function Home() {
   const { isSignedIn, isLoaded, user } = useUser()
@@ -30,10 +33,14 @@ export default function Home() {
                 <div className={styles.label}>Welcome {user.firstName}!</div>
                 <AddTodoForm todos={todos} setTodos={setTodos} />
                 <TodoList todos={todos} setTodos={setTodos} />
+                <SignOutButton />
               </>
             ) : (
               <div className={styles.label}>
                 Sign in to create your todo list!
+                
+                <SignInButton />
+                <SignUpButton/>
               </div>
             )}
           </div>
@@ -51,13 +58,7 @@ const Header = () => {
       <div>My Todo App</div>
       {isSignedIn ? (
         <UserButton />
-      ) : (
-        <div>
-          <SignInButton />
-          &nbsp;
-          <SignUpButton />
-        </div>
-      )}
+      ) : null}
     </header>
   )
 }
@@ -138,7 +139,7 @@ function AddTodoForm({ todos, setTodos }: { todos: Array<Todo>, setTodos: (todos
     const sql = neon(DATABASE_URL, {
       authToken
     });
-    const data = await sql(`INSERT INTO todos (task, user_id) VALUES ($1, $2) RETURNING *`, [newTodo, session.user.id]) as Array<Todo>;
+    const data = await sql(`INSERT INTO todos (task, user_id, is_complete) VALUES ($1, $2, $3) RETURNING *`, [newTodo, session.user.id, false]) as Array<Todo>;
     
     setTodos([...todos, data[0]])
     setNewTodo('')
