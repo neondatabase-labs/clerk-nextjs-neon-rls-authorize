@@ -1,117 +1,152 @@
-import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
-import { LearnMore } from "./components/learn-more";
-import screenshotDevices from "./images/user-button@2xrl.webp";
-import signIn from "./images/sign-in@2xrl.webp";
-import verify from "./images/verify@2xrl.webp";
-import userButton2 from "./images/user-button-2@2xrl.webp";
-import signUp from "./images/sign-up@2xrl.webp";
-import logo from "./images/logo.png";
-import "./home.css";
-import Image from "next/image";
-import Link from "next/link";
-import { Footer } from "./components/footer";
+'use client';
 
-import { CARDS } from "./consts/cards";
-import { ClerkLogo } from "./components/clerk-logo";
-import { NextLogo } from "./components/next-logo";
+import styles from '../styles/Home.module.css'
+import { useState, useEffect } from 'react'
+import {
+  useSession,
+  useUser,
+  UserButton,
+  SignInButton,
+  SignUpButton
+} from '@clerk/nextjs'
+import { neon } from '@neondatabase/serverless';
+
+const DATABASE_URL='FIXME';
 
 export default function Home() {
+  const { isSignedIn, isLoaded, user } = useUser()
+  const [todos, setTodos] = useState<Array<Todo>>([]);
+
   return (
     <>
-      <main className="bg-[#FAFAFA] relative">
-        <div className="w-full bg-white max-w-[75rem] mx-auto flex flex-col border-l border-r border-[#F2F2F2] row-span-3">
-          <div className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-px bg-[#F2F2F2]" />
-          <Image
-            alt="Device"
-            className="size-64 bg-transparent absolute left-1/2 -translate-x-[23.75rem] -top-6 h-[51.375rem] object-contain w-[39.0625rem]"
-            src={logo}
-            unoptimized
-          />
-
-          <div className="px-12 py-16 border-b border-[#F2F2F4]">
-            <div className="bg-[#F4F4F5] px-4 py-3 rounded-full inline-flex gap-4">
-              <ClerkLogo />
-              <div aria-hidden className="w-px h-6 bg-[#C7C7C8]" />
-              <NextLogo />
-            </div>
+      <Header />
+      {!isLoaded ? (
+        <></>
+      ) : (
+        <main className={styles.main}>
+          <div className={styles.container}>
+            {isSignedIn ? (
+              <>
+                <div className={styles.label}>Welcome {user.firstName}!</div>
+                <AddTodoForm todos={todos} setTodos={setTodos} />
+                <TodoList todos={todos} setTodos={setTodos} />
+              </>
+            ) : (
+              <div className={styles.label}>
+                Sign in to create your todo list!
+              </div>
+            )}
           </div>
-
-          <div className="p-10 border-b border-[#F2F2F2]">
-            <h1 className="text-5xl font-bold tracking-tight text-[#131316] relative">
-              Auth starts here
-            </h1>
-
-            <p className="text-[#5E5F6E] pt-3 pb-6 max-w-[30rem] text-[1.0625rem] relative">
-              A simple and powerful Next.js template featuring authentication
-              and user management powered by Clerk.
-            </p>
-            <div className="relative flex gap-3">
-              <SignedIn>
-                <Link
-                  href="/dashboard"
-                  className="px-4 py-2 rounded-full bg-[#131316] text-white text-sm font-semibold"
-                >
-                  Dashboard
-                </Link>
-              </SignedIn>
-              <SignedOut>
-                <SignInButton>
-                  <button className="px-4 py-2 rounded-full bg-[#131316] text-white text-sm font-semibold">
-                    Sign In
-                  </button>
-                </SignInButton>
-              </SignedOut>
-              <Link
-                href="/#features"
-                className="px-4 py-2 rounded-full text-[#131316] text-sm font-semibold bg-[#F7F7F8]"
-              >
-                Learn more
-              </Link>
-            </div>
-          </div>
-          <div className="flex gap-8 w-full h-[41.25rem] scale-[1.03]">
-            <div className="space-y-8 translate-y-12">
-              <Image
-                alt="Device"
-                src={signUp}
-                unoptimized
-                className="flex-none rounded-xl bg-white shadow-[0_5px_15px_rgba(0,0,0,0.08),0_15px_35px_-5px_rgba(25,28,33,0.2)] ring-1 ring-gray-950/5"
-              />
-            </div>
-            <div className="space-y-8 -translate-y-4">
-              <Image
-                alt="Device"
-                src={verify}
-                unoptimized
-                className="flex-none rounded-xl bg-white shadow-[0_5px_15px_rgba(0,0,0,0.08),0_15px_35px_-5px_rgba(25,28,33,0.2)] ring-1 ring-gray-950/5"
-              />
-              <Image
-                alt="Device"
-                src={userButton2}
-                unoptimized
-                className="flex-none rounded-xl bg-white shadow-[0_5px_15px_rgba(0,0,0,0.08),0_15px_35px_-5px_rgba(25,28,33,0.2)] ring-1 ring-gray-950/5"
-              />
-            </div>
-            <div className="space-y-8 -translate-y-[22.5rem]">
-              <Image
-                alt="Device"
-                src={signIn}
-                unoptimized
-                className="flex-none rounded-xl bg-white shadow-[0_5px_15px_rgba(0,0,0,0.08),0_15px_35px_-5px_rgba(25,28,33,0.2)] ring-1 ring-gray-950/5"
-              />
-              <Image
-                alt="Device"
-                src={screenshotDevices}
-                unoptimized
-                className="flex-none rounded-xl bg-white shadow-[0_5px_15px_rgba(0,0,0,0.08),0_15px_35px_-5px_rgba(25,28,33,0.2)] ring-1 ring-gray-950/5"
-              />
-            </div>
-          </div>
-        </div>
-        <div className="absolute left-0 right-0 bottom-0 h-[18.75rem] bg-gradient-to-t from-white" />
-      </main>
-      <LearnMore cards={CARDS} />
-      <Footer />
+        </main>
+      )}
     </>
-  );
+  )
+}
+
+const Header = () => {
+  const { isSignedIn } = useUser()
+
+  return (
+    <header className={styles.header}>
+      <div>My Todo App</div>
+      {isSignedIn ? (
+        <UserButton />
+      ) : (
+        <div>
+          <SignInButton />
+          &nbsp;
+          <SignUpButton />
+        </div>
+      )}
+    </header>
+  )
+}
+
+type Todo = {
+  id: string,
+  task: string,
+  is_complete: boolean,
+  inserted_at: Date
+}
+
+const TodoList = ({ todos, setTodos }: { todos: Array<Todo>, setTodos: (todos: Array<Todo>) => void}) => {
+  const { session } = useSession()
+  const [loadingTodos, setLoadingTodos] = useState(true)
+  
+  if (!session) return null;
+
+  // on first load, fetch and set todos
+  useEffect(() => {
+    const loadTodos = async () => {
+      try {
+        setLoadingTodos(true)
+        const authToken = await session.getToken({
+          template: 'Neon'
+        }) as string;
+        
+        const sql = neon(DATABASE_URL, {
+          authToken
+        });
+        const todos = await sql(`select * from todos`) as Array<Todo>;
+        setTodos(todos);
+      } catch (e) {
+        alert(e)
+      } finally {
+        setLoadingTodos(false)
+      }
+    }
+    loadTodos()
+  }, [])
+
+  // if loading, just show basic message
+  if (loadingTodos) {
+    return <div className={styles.label}>Loading...</div>
+  }
+
+  // display all the todos
+  return (
+    <>
+      {todos?.length > 0 ? (
+        <div className={styles.todoList}>
+          <ol>
+            {todos.map(todo => (
+              <li key={todo.id}>{todo.task}</li>
+            ))}
+          </ol>
+        </div>
+      ) : (
+        <div className={styles.label}>You don&apos;t have any todos!</div>
+      )}
+    </>
+  )
+}
+
+function AddTodoForm({ todos, setTodos }: { todos: Array<Todo>, setTodos: (todos: Array<Todo>) => void}) {
+  const { session } = useSession()
+  const [newTodo, setNewTodo] = useState('')
+  if (!session) return null;
+  
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if (newTodo === '') {
+      return
+    }
+
+    const authToken = await session.getToken({
+      template: 'Neon'
+    }) as string;
+    const sql = neon(DATABASE_URL, {
+      authToken
+    });
+    const data = await sql(`INSERT INTO todos (task, user_id) VALUES ($1, $2) RETURNING *`, [newTodo, session.user.id]) as Array<Todo>;
+    
+    setTodos([...todos, data[0]])
+    setNewTodo('')
+  }
+  return (
+    <form onSubmit={handleSubmit}>
+      <input onChange={e => setNewTodo(e.target.value)} value={newTodo} />
+      &nbsp;<button>Add Todo</button>
+    </form>
+  )
 }

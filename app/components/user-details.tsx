@@ -63,7 +63,7 @@ export function UserDetails() {
   const { organization } = useOrganization();
 
   useEffect(() => {
-    fetch("http://localhost:3001/get-token")
+    fetch("http://localhost:3000/get-token")
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
