@@ -39,9 +39,12 @@ create policy "Individuals can delete their own todos." on todos for
 10. Create a `.env` file in the root of this project and add the following:
 
 ```
-# Grab from Clerk's Dashboard
-CLERK_PUBLISHABLE_KEY=...
-CLERK_SECRET_KEY=...
+# Grab from Clerk's dashboard
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
+
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
 ```
 11. Replace `DATABASE_URL` in `app/page.tsx` with your Neon project's connection string (pick the `authenticated` role from the dropdown).
 
