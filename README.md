@@ -46,8 +46,9 @@ CLERK_SECRET_KEY=
 NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
 NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
 ```
+
 11. Replace `DATABASE_URL` in `app/page.tsx` with your Neon project's connection string (pick the `authenticated` role from the dropdown).
 
-11. Run `npm run dev`
-12. Open your browser and go to `http://localhost:3000`
-13. Login
+12. Run `npm run dev`
+13. Open your browser and go to `http://localhost:3000`
+14. Login

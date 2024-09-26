@@ -13,7 +13,7 @@ export async function GET() {
     "postgresql://anonymous@ep-fancy-cell-w001y1ab.cloud.nitrogen.aws.neon.build/neondb?sslmode=require",
     {
       authToken: token.jwt,
-    }
+    },
   );
   const results = await sql(`SELECT 1`);
   console.log(results);
