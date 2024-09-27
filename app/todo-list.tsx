@@ -1,7 +1,7 @@
-'use server';
+"use server";
 
-import { getTodos } from '@/app/actions';
-import styles from '../styles/Home.module.css';
+import { getTodos } from "@/app/actions";
+import styles from "../styles/Home.module.css";
 
 export async function TodoList() {
   const todos = await getTodos();

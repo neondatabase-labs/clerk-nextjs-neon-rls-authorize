@@ -1,12 +1,12 @@
-'use server';
+"use server";
 
-import { insertTodo } from '@/app/actions';
+import { insertTodo } from "@/app/actions";
 
 export async function insertTodoFormAction(formData: FormData) {
-  const newTodo = formData.get('newTodo');
+  const newTodo = formData.get("newTodo");
 
   if (!newTodo) {
-    throw new Error('No newTodo');
+    throw new Error("No newTodo");
   }
 
   return insertTodo({ newTodo: newTodo.toString() });
