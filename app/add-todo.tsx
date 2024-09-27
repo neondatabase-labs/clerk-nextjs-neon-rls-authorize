@@ -1,32 +1,26 @@
-"use client";
+"use server";
 
-import { useState } from "react";
-import { useContext } from "react";
-import { AuthTokenContext } from "@/app/auth-token-provider";
 import { insertTodo } from "@/app/actions";
+import { revalidatePath } from "next/cache";
+import { auth } from "@clerk/nextjs/server";
 
-export function AddTodoForm() {
-  const [newTodo, setNewTodo] = useState("");
-
-  const authToken = useContext(AuthTokenContext);
-  if (!authToken) {
-    return null;
-  }
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (newTodo === "") {
-      return;
-    }
-
-    insertTodo({ authToken, newTodo });
-  };
+export async function AddTodoForm() {
+  const { getToken } = auth();
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input onChange={(e) => setNewTodo(e.target.value)} value={newTodo} />
-      &nbsp;<button>Add Todo</button>
+    <form
+      action={async (formData: FormData) => {
+        "use server";
+        const authToken = await getToken();
+        if (authToken) {
+          insertTodo({ authToken, newTodo: formData.get("newTodo") as string });
+          revalidatePath("/");
+        }
+      }}
+    >
+      <input name="newTodo"></input>
+      {/* <input onChange={(e) => setNewTodo(e.target.value)} value={newTodo} /> */}
+      &nbsp;<button type="submit">Add Todo</button>
     </form>
   );
 }

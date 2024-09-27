@@ -3,6 +3,7 @@
 import * as schema from "@/app/schema";
 import { getDb } from "@/app/db";
 import { Todo } from "@/app/schema";
+import { revalidatePath } from "next/cache";
 
 function parseJwt(token: string) {
   return JSON.parse(Buffer.from(token.split(".")[1], "base64").toString());
@@ -23,7 +24,7 @@ export async function insertTodo({
       isComplete: false,
     });
 
-  console.log(todo);
+  // revalidatePath("/");
 }
 
 export async function getTodos({

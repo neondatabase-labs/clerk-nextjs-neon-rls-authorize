@@ -1,3 +1,5 @@
+"use client";
+
 import { useContext } from "react";
 import { TodosContext } from "@/app/todos-provider";
 
