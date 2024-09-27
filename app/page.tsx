@@ -1,9 +1,8 @@
-import { TodoList } from "@/app/todo-list";
-import { AddTodoForm } from "@/app/add-todo";
-import { Header } from "@/app/header";
-import { TodosProvider } from "@/app/todos-provider";
+import { AddTodoForm } from '@/app/add-todo';
+import { Header } from '@/app/header';
+import { TodoList } from '@/app/todo-list';
 
-import styles from "../styles/Home.module.css";
+import styles from '../styles/Home.module.css';
 
 export default async function Home() {
   return (
@@ -12,9 +11,7 @@ export default async function Home() {
       <main className={styles.main}>
         <div className={styles.container}>
           <AddTodoForm />
-          <TodosProvider>
-            <TodoList />
-          </TodosProvider>
+          <TodoList />
         </div>
       </main>
     </>

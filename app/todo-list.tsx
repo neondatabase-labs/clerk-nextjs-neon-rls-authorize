@@ -1,12 +1,10 @@
-"use client";
+'use server';
 
-import { useContext } from "react";
-import { TodosContext } from "@/app/todos-provider";
+import { getTodos } from '@/app/actions';
+import styles from '../styles/Home.module.css';
 
-import styles from "../styles/Home.module.css";
-
-export function TodoList() {
-  const todos = useContext(TodosContext);
+export async function TodoList() {
+  const todos = await getTodos();
 
   // if loading, just show basic message
   if (todos === null) {

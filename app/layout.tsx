@@ -1,9 +1,6 @@
-"use client";
+import { ClerkProvider } from '@clerk/nextjs';
 
-import { ClerkProvider } from "@clerk/nextjs";
-import { AuthTokenProvider } from "@/app/auth-token-provider";
-
-import "../styles/globals.css";
+import '../styles/globals.css';
 
 export default function RootLayout({
   children,
@@ -13,11 +10,9 @@ export default function RootLayout({
   return (
     <html>
       <ClerkProvider>
-        <AuthTokenProvider>
-          <body className={`min-h-screen flex flex-col antialiased`}>
-            {children}
-          </body>
-        </AuthTokenProvider>
+        <body className={`min-h-screen flex flex-col antialiased`}>
+          {children}
+        </body>
       </ClerkProvider>
     </html>
   );

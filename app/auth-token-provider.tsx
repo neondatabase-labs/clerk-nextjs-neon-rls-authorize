@@ -1,8 +1,7 @@
-"use client";
+'use client';
 
-import { useSession } from "@clerk/nextjs";
-import { auth } from "@clerk/nextjs/dist/types/server";
-import { createContext, useEffect, useState } from "react";
+import { useSession } from '@clerk/nextjs';
+import { createContext, useEffect, useState } from 'react';
 
 export const AuthTokenContext = createContext<null | string>(null);
 
@@ -14,7 +13,7 @@ export function AuthTokenProvider({ children }: { children: React.ReactNode }) {
     async function loadAuthToken() {
       if (session) {
         authToken = await session.getToken();
-        console.log("authToken", authToken);
+        console.log('authToken', authToken);
 
         if (authToken) {
           setAuthToken(authToken);

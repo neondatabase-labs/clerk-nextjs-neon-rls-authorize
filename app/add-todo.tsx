@@ -1,23 +1,20 @@
-"use server";
+'use server';
 
-import { insertTodo } from "@/app/actions";
-import { revalidatePath } from "next/cache";
-import { auth } from "@clerk/nextjs/server";
+import { insertTodo } from '@/app/actions';
+
+export async function insertTodoFormAction(formData: FormData) {
+  const newTodo = formData.get('newTodo');
+
+  if (!newTodo) {
+    throw new Error('No newTodo');
+  }
+
+  return insertTodo({ newTodo: newTodo.toString() });
+}
 
 export async function AddTodoForm() {
-  const { getToken } = auth();
-
   return (
-    <form
-      action={async (formData: FormData) => {
-        "use server";
-        const authToken = await getToken();
-        if (authToken) {
-          insertTodo({ authToken, newTodo: formData.get("newTodo") as string });
-          revalidatePath("/");
-        }
-      }}
-    >
+    <form action={insertTodoFormAction}>
       <input name="newTodo"></input>
       {/* <input onChange={(e) => setNewTodo(e.target.value)} value={newTodo} /> */}
       &nbsp;<button type="submit">Add Todo</button>
