@@ -1,12 +1,16 @@
-"use server";
+'use server';
 
-import { insertTodo } from "@/app/actions";
+import { insertTodo } from '@/app/actions';
 
 export async function insertTodoFormAction(formData: FormData) {
-  const newTodo = formData.get("newTodo");
+  const newTodo = formData.get('newTodo');
 
   if (!newTodo) {
-    throw new Error("No newTodo");
+    throw new Error('No newTodo');
+  }
+
+  if (typeof newTodo !== 'string') {
+    throw new Error('The newTodo must be a string');
   }
 
   return insertTodo({ newTodo: newTodo.toString() });
@@ -15,8 +19,7 @@ export async function insertTodoFormAction(formData: FormData) {
 export async function AddTodoForm() {
   return (
     <form action={insertTodoFormAction}>
-      <input name="newTodo"></input>
-      {/* <input onChange={(e) => setNewTodo(e.target.value)} value={newTodo} /> */}
+      <input required name="newTodo"></input>
       &nbsp;<button type="submit">Add Todo</button>
     </form>
   );
