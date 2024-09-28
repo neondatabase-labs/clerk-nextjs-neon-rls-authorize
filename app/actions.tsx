@@ -1,10 +1,10 @@
-'use server';
+"use server";
 
-import { fetchWithDrizzle } from '@/app/db';
-import * as schema from '@/app/schema';
-import { Todo } from '@/app/schema';
-import { eq } from 'drizzle-orm';
-import { revalidatePath } from 'next/cache';
+import { fetchWithDrizzle } from "@/app/db";
+import * as schema from "@/app/schema";
+import { Todo } from "@/app/schema";
+import { eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 
 export async function insertTodo({ newTodo }: { newTodo: string }) {
   await fetchWithDrizzle(async (db) => {
@@ -14,7 +14,7 @@ export async function insertTodo({ newTodo }: { newTodo: string }) {
     });
   });
 
-  revalidatePath('/');
+  revalidatePath("/");
 }
 
 export async function getTodos(): Promise<Array<Todo>> {

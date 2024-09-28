@@ -5,10 +5,7 @@ import postgres from "postgres";
 import { drizzle } from "drizzle-orm/postgres-js";
 config({ path: ".dev.vars" });
 const databaseUrl = drizzle(
-  postgres(
-    `postgresql://neondb_owner:1CT9odBrjsWD@ep-rapid-river-w0e1aaya.cloud.nitrogen.aws.neon.build/neondb?sslmode=require`,
-    { ssl: "require", max: 1 },
-  ),
+  postgres(process.env.DATABASE_URL!, { ssl: "require", max: 1 }),
 );
 const main = async () => {
   try {
