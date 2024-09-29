@@ -1,6 +1,6 @@
 # Neon Authorize + Clerk RLS Example (SQL from the Backend)
 
-This repository is a guided getting started example for Neon Authorize + Clerk RLS.
+This repository is a guided getting started example for Neon Authorize + Clerk.
 
 1. Create a Neon project
 2. Create a Clerk Application
