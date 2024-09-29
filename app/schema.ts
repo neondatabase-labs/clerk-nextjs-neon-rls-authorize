@@ -16,7 +16,7 @@ export const todos = pgTable(
       .generatedByDefaultAsIdentity(),
     userId: text("user_id")
       .notNull()
-      .$default(() => sql`(select auth.user_id())`),
+      .default(sql`(auth.user_id())`),
     task: text("task").notNull(),
     isComplete: boolean("is_complete").notNull().default(false),
     insertedAt: timestamp("inserted_at", { withTimezone: true })

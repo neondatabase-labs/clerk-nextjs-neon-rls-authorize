@@ -1,5 +1,5 @@
 {
-  "id": "8c558897-69b4-4d30-989d-795f701801d9",
+  "id": "7f1e97e4-e4cc-4485-bd54-f32feb0eda54",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -29,7 +29,8 @@
           "name": "user_id",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "(auth.user_id())"
         },
         "task": {
           "name": "task",
@@ -61,28 +62,36 @@
           "name": "create todos",
           "as": "PERMISSIVE",
           "for": "INSERT",
-          "to": ["authenticated"],
+          "to": [
+            "authenticated"
+          ],
           "withCheck": "(select auth.user_id() = user_id)"
         },
         "view todos": {
           "name": "view todos",
           "as": "PERMISSIVE",
           "for": "SELECT",
-          "to": ["authenticated"],
+          "to": [
+            "authenticated"
+          ],
           "using": "(select auth.user_id() = user_id)"
         },
         "update todos": {
           "name": "update todos",
           "as": "PERMISSIVE",
           "for": "UPDATE",
-          "to": ["authenticated"],
+          "to": [
+            "authenticated"
+          ],
           "using": "(select auth.user_id() = user_id)"
         },
         "delete todos": {
           "name": "delete todos",
           "as": "PERMISSIVE",
           "for": "DELETE",
-          "to": ["authenticated"],
+          "to": [
+            "authenticated"
+          ],
           "using": "(select auth.user_id() = user_id)"
         }
       }
