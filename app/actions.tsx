@@ -3,7 +3,7 @@
 import { fetchWithDrizzle } from "@/app/db";
 import * as schema from "@/app/schema";
 import { Todo } from "@/app/schema";
-import { asc, eq } from "drizzle-orm";
+import { asc, eq, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 export async function insertTodo({ newTodo }: { newTodo: string }) {
@@ -24,7 +24,7 @@ export async function getTodos(): Promise<Array<Todo>> {
     return db
       .select()
       .from(schema.todos)
-      .where(eq(schema.todos.userId, userId))
+      .where(eq(schema.todos.userId, sql`auth.user_id()`))
       .orderBy(asc(schema.todos.insertedAt));
   });
 }
