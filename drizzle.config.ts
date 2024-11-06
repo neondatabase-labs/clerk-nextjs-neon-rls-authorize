@@ -8,5 +8,5 @@ export default defineConfig({
   out: "./drizzle",
   dbCredentials: {
     url: process.env.DATABASE_URL!,
-  }
+  },
 });
