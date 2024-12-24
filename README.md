@@ -117,6 +117,7 @@ Before deploying to production:
 - [Neon Authorize Tutorial](https://neon.tech/docs/guides/neon-authorize-tutorial)
 - [Simplify RLS with Drizzle](https://neon.tech/docs/guides/neon-authorize-drizzle)
 - [Clerk Documentation](https://clerk.com/docs)
+- [Neon Authorize + Clerk Integration](https://neon.tech/docs/guides/neon-authorize-clerk)
 
 ## Authors
 
