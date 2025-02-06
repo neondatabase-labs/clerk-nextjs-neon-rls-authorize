@@ -1,14 +1,14 @@
 <img width="250px" src="https://neon.tech/brand/neon-logo-dark-color.svg" />
 
-# Neon Authorize + Clerk Example (SQL from the Backend)
+# Neon RLS Authorize + Clerk Example (SQL from the Backend)
 
-A quick start Next.js template demonstrating secure user authentication and authorization using Neon Authorize with Clerk integration. This guide primarily uses SQL from the backend to enforce row-level security policies.
+A quick start Next.js template demonstrating secure user authentication and authorization using Neon RLS Authorize with Clerk integration. This guide primarily uses SQL from the backend to enforce row-level security policies.
 
 ## Features
 
 - Next.js application with TypeScript
 - User authentication powered by Clerk
-- Row-level security using Neon Authorize
+- Row-level security using Neon RLS Authorize
 - Database migrations with Drizzle ORM
 - Ready-to-deploy configuration for Vercel, Netlify, and Render
 
@@ -22,9 +22,9 @@ A quick start Next.js template demonstrating secure user authentication and auth
 
 Deploy directly to your preferred hosting platform:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/neondatabase-labs/clerk-nextjs-neon-authorize&env=NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,CLERK_SECRET_KEY,DATABASE_URL,DATABASE_AUTHENTICATED_URL,NEXT_PUBLIC_CLERK_SIGN_IN_URL,NEXT_PUBLIC_CLERK_SIGN_UP_URL&project-name=clerk-neon-authorize&repository-name=clerk-neon-authorize)
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/neondatabase-labs/clerk-nextjs-neon-authorize)
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/neondatabase-labs/clerk-nextjs-neon-authorize)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/neondatabase-labs/clerk-nextjs-neon-rls-authorize&env=NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,CLERK_SECRET_KEY,DATABASE_URL,DATABASE_AUTHENTICATED_URL,NEXT_PUBLIC_CLERK_SIGN_IN_URL,NEXT_PUBLIC_CLERK_SIGN_UP_URL&project-name=clerk-neon-rls-authorize&repository-name=clerk-neon-rls-authorize)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/neondatabase-labs/clerk-nextjs-neon-rls-authorize)
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/neondatabase-labs/clerk-nextjs-neon-rls-authorize)
 
 ## Local Development Setup
 
@@ -37,26 +37,26 @@ Deploy directly to your preferred hosting platform:
     ![Clerk JWT Templates](/images/clerk-jwt-templates.png)
 4. Create a new JWT Template (select "Blank" as the template type).
     ![Clerk JWT New Template Select](/images/clerk-jwt-new-template-select.png)
-5. Name your template (e.g., `neon_authorize`).
-6. Copy the **JWKS Endpoint** URL. You'll need this for Neon Authorize.
+5. Name your template (e.g., `neon_rls_authorize`).
+6. Copy the **JWKS Endpoint** URL. You'll need this for Neon RLS Authorize.
     ![Clerk JWT New Template created](/images/clerk-jwt-new-template-created.png)
 
-### 2. Set Up Neon Authorize
+### 2. Set Up Neon RLS Authorize
 
-1. Open your Neon Console and click on **Authorize**.
+1. Open your Neon Console and click on **RLS Authorize** in your project's settings.
 2. Click **Add Authentication Provider**.
 3. Paste the **JWKS Endpoint** URL you copied from Clerk into the **JWKS URL** field.
 4. Follow the steps in the Neon UI to set up the `authenticated` role. You can skip the schema-related steps if you are just getting started with this example.
 
-    ![Neon Authorize Add Auth Provider](/images/neon-authorize-add-auth-provider.png)
+    ![Neon RLS Authorize Add Auth Provider](/images/neon-authorize-add-auth-provider.png)
 
 ### 3. Local Installation
 
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/neondatabase-labs/clerk-nextjs-neon-authorize
-    cd clerk-nextjs-neon-authorize
+    git clone https://github.com/neondatabase-labs/clerk-nextjs-neon-rls-authorize
+    cd clerk-nextjs-neon-rls-authorize
     ```
 
 2. Install dependencies:
@@ -109,15 +109,15 @@ Before deploying to production:
 1. Modify your Clerk application environment to use the Production instance. Create one if you haven't already.
     ![Clerk Production Environment](/images/clerk-production-environment.png)
 2. Update your environment variables with the new production credentials
-3. Update your authentication configuration in Neon Authorize with the new JWKS URL
+3. Update your authentication configuration in Neon RLS Authorize with the new JWKS URL
 
 
 ## Learn More
 
-- [Neon Authorize Tutorial](https://neon.tech/docs/guides/neon-authorize-tutorial)
+- [Neon RLS Authorize Tutorial](https://neon.tech/docs/guides/neon-authorize-tutorial)
 - [Simplify RLS with Drizzle](https://neon.tech/docs/guides/neon-authorize-drizzle)
 - [Clerk Documentation](https://clerk.com/docs)
-- [Neon Authorize + Clerk Integration](https://neon.tech/docs/guides/neon-authorize-clerk)
+- [Neon RLS Authorize + Clerk Integration](https://neon.tech/docs/guides/neon-authorize-clerk)
 
 ## Authors
 
